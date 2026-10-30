@@ -1,6 +1,7 @@
 import speech_recognition as sr
 import pyttsx3
 from googletrans import Translator
+import asyncio
 def speak(text,language="en"):
     engine=pyttsx3.init()
     engine.setProperty('rate',150)
@@ -26,11 +27,14 @@ def speech_to_text():
     except sr.RequestError as e:
         print(f"❌API Error:{e}")
     return ""
-def translate_text(text,target_language="es"):
-    translator=Translator()
-    translation=translator.translate(text,dest=target_language)
-    print(F"🌎 Translated text:{translation.text}")
-    return translation.text
+async def translate_text(text, target_language):
+        translator = Translator()
+        translation = await translator.translate(
+        text,
+        dest=target_language
+        )
+        print(f"🌎 Translated text: {translation.text}")
+        return translation.text
 def display_language_options():
     print("🌎 Available translation languages:")
     print("1. Hindi(hi)")
